@@ -4,26 +4,24 @@ Proyecto de zapateria App
 
 Este documento describe paso a paso el proceso de instalación, configuración y ejecución del proyecto **Zapatería App**, con capturas de pantalla del procedimiento completo.
 
----
 
 ## 🧱 1️⃣ Inicialización del repositorio local
 
 1. Abre una terminal en la carpeta del proyecto.
 2. Ejecuta el comando para inicializar un nuevo repositorio Git:
 
-```bash
 git init
 
-`![Texto alternativo](public\img\Git_init.png)`
+<img width="988" height="540" alt="Image" src="https://github.com/user-attachments/assets/0c100fd4-8427-4c5a-b13c-45a4911635aa" />
 
 ☁️ 2️⃣ Creación del repositorio remoto en GitHub
 Ingresa a GitHub y crea un nuevo repositorio con el nombre zapateria-app.
 
 Copia la URL del repositorio remoto.
 
-(public\img\Repositorio.png?raw=true)
+<img width="1656" height="633" alt="Image" src="https://github.com/user-attachments/assets/b119e258-3c04-44b1-a75d-3c61e485b37c" />
 
-🔗 3️⃣ Vinculación del repositorio local con el remoto
+##🔗 3️⃣ Vinculación del repositorio local con el remoto
 Conecta el repositorio local al remoto usando:
 
 Usando 
@@ -32,7 +30,7 @@ git commit -m "Iniciando"
 git remote add origin 
 git push origin main
 
-(public\img\Git_Push.png?raw=true)
+([https://github.com/BrandonB30/MacaBlue/blob/main/assets/images/Panel%20Admin.jpg](https://github.com/BrandonB30/Zapateria/blob/main/public/img/Git_Push.png))
 
 ⚙️ 5️⃣ Instalación de dependencias del proyecto
 Una vez clonado o descargado el proyecto, abre una terminal en la raíz del proyecto.
@@ -44,7 +42,7 @@ Copy code
 npm install
 Esto instalará todas las dependencias necesarias definidas en el archivo package.json.
 
-(public\img\Run.png?raw=true)
+<img width="1183" height="312" alt="Image" src="https://github.com/user-attachments/assets/f5649387-5a03-4d20-9a25-8e6528f40cd7" />
 
 🚀 6️⃣ Ejecución del servidor
 Para correr el servidor en modo desarrollo:
@@ -59,6 +57,6 @@ arduino
 Copy code
 http://localhost:3000
 
-(public\img\Pagina.png?raw=true)
+<img width="1919" height="954" alt="Image" src="https://github.com/user-attachments/assets/95bbef02-ac06-40d2-9525-22a93c03dca6" />
 
 Y con esto finalizamos y comprobamos el funcionamiento de la pagina.
