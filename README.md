@@ -14,7 +14,7 @@ Este documento describe paso a paso el proceso de instalación, configuración y
 ```bash
 git init
 
-(public\img\Git_init.png?raw=true)
+`![Texto alternativo](public\img\Git_init.png)`
 
 ☁️ 2️⃣ Creación del repositorio remoto en GitHub
 Ingresa a GitHub y crea un nuevo repositorio con el nombre zapateria-app.
