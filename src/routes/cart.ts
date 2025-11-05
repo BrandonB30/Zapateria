@@ -1,53 +1,126 @@
 import { Router } from "express";
+import { promises as fs } from "fs";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 import type { CartItem } from "../types/index.d.js";
 
 const router = Router();
 
-// Cart is stored per-session in cookie-session
-router.get("/", (req, res) => {
-  const cart: CartItem[] = (req.session as any).cart || [];
-  res.json(cart);
-});
+// Obtener la ruta del directorio actual
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const DATA_FILE = join(__dirname, "../data/data.json");
 
-router.post("/add", (req, res) => {
-  const { productId, qty } = req.body as CartItem;
-  if (!productId || qty == null || qty <= 0) {
-    return res.status(400).json({ error: "Datos inválidos" });
+// Función para obtener el ID de sesión
+function getSessionId(req: any): string {
+  return req.sessionID || "default";
+}
+
+// Función para leer datos del archivo JSON
+async function readData(): Promise<{ products: any[]; carts: Record<string, CartItem[]> }> {
+  try {
+    const data = await fs.readFile(DATA_FILE, "utf-8");
+    return JSON.parse(data);
+  } catch (error) {
+    return { products: [], carts: {} };
   }
-  const sess: any = req.session;
-  sess.cart = sess.cart || [];
-  const idx = sess.cart.findIndex((i: CartItem) => i.productId === productId);
-  if (idx >= 0) sess.cart[idx].qty += qty;
-  else sess.cart.push({ productId, qty });
-  res.json({ ok: true, cart: sess.cart });
+}
+
+// Función para escribir datos al archivo JSON
+async function writeData(data: { products: any[]; carts: Record<string, CartItem[]> }): Promise<void> {
+  await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2), "utf-8");
+}
+
+// Función para obtener el carrito de una sesión
+async function getCart(sessionId: string): Promise<CartItem[]> {
+  const data = await readData();
+  return data.carts[sessionId] || [];
+}
+
+// Función para guardar el carrito de una sesión
+async function saveCart(sessionId: string, cart: CartItem[]): Promise<void> {
+  const data = await readData();
+  data.carts[sessionId] = cart;
+  await writeData(data);
+}
+
+router.get("/", async (req, res) => {
+  try {
+    const sessionId = getSessionId(req);
+    const cart = await getCart(sessionId);
+    res.json(cart);
+  } catch (error) {
+    console.error("Error leyendo carrito:", error);
+    res.status(500).json({ error: "Error al cargar carrito" });
+  }
 });
 
-router.post("/remove", (req, res) => {
-  const { productId } = req.body as { productId: number };
-  if (!productId) return res.status(400).json({ error: "productId requerido" });
-  const sess: any = req.session;
-  sess.cart = (sess.cart || []).filter((i: CartItem) => i.productId !== productId);
-  res.json({ ok: true, cart: sess.cart });
+router.post("/add", async (req, res) => {
+  try {
+    const { productId, qty } = req.body as CartItem;
+    if (!productId || qty == null || qty <= 0) {
+      return res.status(400).json({ error: "Datos inválidos" });
+    }
+    
+    const sessionId = getSessionId(req);
+    const cart = await getCart(sessionId);
+    
+    const idx = cart.findIndex((i: CartItem) => i.productId === productId);
+    if (idx >= 0) {
+      cart[idx].qty += qty;
+    } else {
+      cart.push({ productId, qty });
+    }
+    
+    await saveCart(sessionId, cart);
+    res.json({ ok: true, cart });
+  } catch (error) {
+    console.error("Error agregando al carrito:", error);
+    res.status(500).json({ error: "Error al agregar producto al carrito" });
+  }
 });
 
-router.post("/clear", (req, res) => {
-  (req.session as any).cart = [];
-  res.json({ ok: true, cart: [] });
+router.post("/remove", async (req, res) => {
+  try {
+    const { productId } = req.body as { productId: number };
+    if (!productId) return res.status(400).json({ error: "productId requerido" });
+    
+    const sessionId = getSessionId(req);
+    const cart = await getCart(sessionId);
+    const updatedCart = cart.filter((i: CartItem) => i.productId !== productId);
+    
+    await saveCart(sessionId, updatedCart);
+    res.json({ ok: true, cart: updatedCart });
+  } catch (error) {
+    console.error("Error removiendo del carrito:", error);
+    res.status(500).json({ error: "Error al remover producto del carrito" });
+  }
+});
+
+router.post("/clear", async (req, res) => {
+  try {
+    const sessionId = getSessionId(req);
+    await saveCart(sessionId, []);
+    res.json({ ok: true, cart: [] });
+  } catch (error) {
+    console.error("Error limpiando carrito:", error);
+    res.status(500).json({ error: "Error al limpiar carrito" });
+  }
 });
 
 // Nueva ruta: calcular el total del carrito
 router.get("/total", async (req, res) => {
-  const sess: any = req.session;
-  const cart: CartItem[] = sess.cart || [];
-
-  if (cart.length === 0) {
-    return res.json({ total: 0, items: [] });
-  }
-
   try {
-    // Cargar los productos
-    const response = await fetch("http://localhost:3000/api/products");
-    const products = await response.json();
+    const sessionId = getSessionId(req);
+    const cart = await getCart(sessionId);
+
+    if (cart.length === 0) {
+      return res.json({ total: 0, items: [] });
+    }
+
+    // Cargar los productos desde el archivo JSON
+    const data = await readData();
+    const products = data.products;
 
     // Construir el detalle de cada producto del carrito
     const detailedItems = cart
