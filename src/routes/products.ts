@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import type { Product, CartItem } from "../types/index.d.js";
+import { validateIdParam } from "../security/validation.middleware.js";
 
 const router = Router();
 
@@ -37,7 +38,7 @@ router.get("/", async (_req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", validateIdParam, async (req, res) => {
   try {
     const id = Number(req.params.id);
     const data = await readData();

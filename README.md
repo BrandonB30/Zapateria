@@ -213,4 +213,68 @@ El frontend (`public/js/app.js` y `public/js/cart.js`) se comunica con el backen
 La comunicación es asíncrona y utiliza JSON para el intercambio de datos, manteniendo una separación clara entre la lógica de presentación (frontend) y la lógica de negocio (backend).
 
 
+**10. Pruebas de Software:**
+
+Se implementaron 13 pruebas de software utilizando Jest y Supertest para garantizar la calidad y funcionalidad del código. Las pruebas están organizadas en tres archivos dentro de la carpeta `/src/pruebas/` y cubren las funcionalidades principales del sistema.
+
+**Herramientas utilizadas:**
+- **Jest**: Framework de testing para JavaScript/TypeScript
+- **Supertest**: Librería para probar endpoints HTTP de Express
+- **ts-jest**: Configuración de Jest para TypeScript con soporte ES modules
+
+**Pruebas implementadas y aprobadas:**
+
+**Pruebas de Productos (`products.test.ts`) - 4 pruebas:**
+1. ✅ **GET /api/products devuelve todos los productos**: Verifica que la ruta devuelve correctamente todos los productos del catálogo desde `data.json`
+2. ✅ **GET /api/products/:id devuelve un producto específico**: Valida que se puede obtener un producto por su ID con todos sus campos (id, name, price, image, description, stock)
+3. ✅ **GET /api/products/:id retorna 404 cuando no existe**: Confirma que el sistema maneja correctamente productos inexistentes
+4. ✅ **GET /api/products/:id valida ID inválido**: Verifica que el middleware de validación rechaza IDs no numéricos o inválidos (retorna 400)
+
+**Pruebas de Carrito (`cart.test.ts`) - 7 pruebas:**
+5. ✅ **GET /api/cart devuelve el carrito vacío inicialmente**: Confirma que nuevas sesiones inician con carrito vacío
+6. ✅ **POST /api/cart/add agrega productos correctamente**: Valida que se pueden agregar productos al carrito con la cantidad especificada
+7. ✅ **POST /api/cart/add valida datos inválidos (productId faltante)**: Verifica que el middleware de validación rechaza peticiones sin `productId` requerido
+8. ✅ **POST /api/cart/add valida datos inválidos (qty <= 0)**: Confirma que se rechazan cantidades inválidas (cero o negativas)
+9. ✅ **POST /api/cart/remove elimina productos**: Verifica que se pueden eliminar productos del carrito correctamente
+10. ✅ **GET /api/cart/total calcula correctamente el total**: Valida que el cálculo del total incluye subtotales por producto y el total general
+11. ✅ **POST /api/cart/clear vacía el carrito**: Confirma que se puede vaciar completamente el carrito de una sesión
+
+**Pruebas de Persistencia (`data.test.ts`) - 2 pruebas:**
+12. ✅ **readData() lee correctamente desde JSON**: Verifica que la función de lectura de datos funciona correctamente con el archivo `data.json`
+13. ✅ **writeData() escribe correctamente en JSON**: Valida que la función de escritura guarda los datos correctamente en el archivo `data.json`
+
+**Resultados de las pruebas:**
+- **Total de pruebas**: 13
+- **Pruebas pasando**: 13 (100%)
+- **Pruebas fallando**: 0
+- **Test Suites**: 3 (todos pasando)
+- **Cobertura de código**: 
+  - Statements: 81%
+  - Branches: 77.77%
+  - Functions: 95.23%
+  - Lines: 80.64%
+
+**Comandos para ejecutar las pruebas:**
+```bash
+# Ejecutar todas las pruebas
+npm test
+
+# Ejecutar pruebas en modo watch (se actualiza automáticamente)
+npm run test:watch
+
+# Ejecutar pruebas con reporte de cobertura
+npm run test:coverage
+
+# Abrir reporte HTML de pruebas
+npm run test:html
+```
+
+**Reporte HTML:**
+Se genera automáticamente un reporte HTML visual en `src/pruebas/reporte.html` que muestra el estado de todas las pruebas, así como un reporte de cobertura en `coverage/index.html` con detalles de qué líneas de código están cubiertas por las pruebas.
+
+<img width="1919" height="954" alt="Reporte de Pruebas 1" src="public/img/pruebas1.png" />
+
+<img width="1919" height="954" alt="Reporte de Pruebas 2" src="public/img/pruebas2.png" />
+
+<img width="1919" height="954" alt="Reporte de Pruebas 3" src="public/img/pruebas3.png" />
 

@@ -3,6 +3,7 @@ import { promises as fs } from "fs";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import type { CartItem } from "../types/index.d.js";
+import { validateProductId, validateQuantity } from "../security/validation.middleware.js";
 
 const router = Router();
 
@@ -55,12 +56,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/add", async (req, res) => {
+router.post("/add", validateProductId, validateQuantity, async (req, res) => {
   try {
     const { productId, qty } = req.body as CartItem;
-    if (!productId || qty == null || qty <= 0) {
-      return res.status(400).json({ error: "Datos inválidos" });
-    }
     
     const sessionId = getSessionId(req);
     const cart = await getCart(sessionId);
@@ -80,10 +78,9 @@ router.post("/add", async (req, res) => {
   }
 });
 
-router.post("/remove", async (req, res) => {
+router.post("/remove", validateProductId, async (req, res) => {
   try {
     const { productId } = req.body as { productId: number };
-    if (!productId) return res.status(400).json({ error: "productId requerido" });
     
     const sessionId = getSessionId(req);
     const cart = await getCart(sessionId);

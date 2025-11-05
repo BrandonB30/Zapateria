@@ -73,12 +73,5 @@
       "stock": 11
     }
   ],
-  "carts": {
-    "default": [
-      {
-        "productId": 1,
-        "qty": 4
-      }
-    ]
-  }
+  "carts": {}
 }

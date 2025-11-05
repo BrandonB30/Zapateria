@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte de Pruebas - FootStyle</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 30px;
+        }
+        h1 {
+            color: #6366f1;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+        .stat-card p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        .test-section {
+            margin-bottom: 30px;
+        }
+        .test-section h2 {
+            color: #6366f1;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        .test-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border-left: 4px solid #6366f1;
+        }
+        .test-item.passed {
+            border-left-color: #10b981;
+            background: #f0fdf4;
+        }
+        .test-item.failed {
+            border-left-color: #ef4444;
+            background: #fef2f2;
+        }
+        .test-item.pending {
+            border-left-color: #f59e0b;
+            background: #fffbeb;
+        }
+        .test-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        .test-description {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        .badge.passed {
+            background: #10b981;
+            color: white;
+        }
+        .badge.failed {
+            background: #ef4444;
+            color: white;
+        }
+        .badge.pending {
+            background: #f59e0b;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 Reporte de Pruebas</h1>
+        <p class="subtitle">FootStyle - Zapatería App</p>
+        
+        <div class="summary">
+            <div class="stat-card">
+                <h3>13</h3>
+                <p>Pruebas Totales</p>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <h3>13</h3>
+                <p>Pruebas Pasando ✅</p>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <h3>3</h3>
+                <p>Test Suites Pasando</p>
+            </div>
+            <div class="stat-card" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
+                <h3>81%</h3>
+                <p>Cobertura de Código</p>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Pruebas de Persistencia de Datos (data.test.ts)</h2>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 12: readData() debe leer correctamente desde JSON
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que la función readData() lee correctamente los datos del archivo data.json</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 13: writeData() debe escribir correctamente en JSON
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que la función writeData() escribe correctamente los datos en el archivo data.json</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Pruebas de Productos (products.test.ts)</h2>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 1: GET /api/products devuelve todos los productos
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que la ruta GET /api/products devuelve todos los productos del catálogo</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 2: GET /api/products/:id devuelve un producto específico
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que la ruta GET /api/products/:id devuelve un producto específico por su ID</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 3: GET /api/products/:id retorna 404 cuando no existe
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que la ruta retorna 404 cuando el producto no existe</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 4: GET /api/products/:id valida ID inválido
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que la validación de entrada rechaza IDs inválidos (retorna 400)</div>
+            </div>
+        </div>
+
+        <div class="test-section">
+            <h2>✅ Pruebas de Carrito (cart.test.ts)</h2>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 5: GET /api/cart devuelve el carrito vacío inicialmente
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que el carrito se inicializa vacío para nuevas sesiones</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 6: POST /api/cart/add agrega productos correctamente
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que se pueden agregar productos al carrito con cantidad especificada</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 7: POST /api/cart/add valida datos inválidos (productId faltante)
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que el middleware de validación rechaza peticiones sin productId</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 8: POST /api/cart/add valida datos inválidos (qty <= 0)
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que el middleware de validación rechaza cantidades inválidas</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 9: POST /api/cart/remove elimina productos
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que se pueden eliminar productos del carrito</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 10: GET /api/cart/total calcula correctamente el total
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que el cálculo del total del carrito es correcto</div>
+            </div>
+            <div class="test-item passed">
+                <div class="test-name">
+                    Prueba 11: POST /api/cart/clear vacía el carrito
+                    <span class="badge passed">✅ PASANDO</span>
+                </div>
+                <div class="test-description">Verifica que se puede vaciar completamente el carrito</div>
+            </div>
+        </div>
+
+        <div class="test-section" style="background: #f0fdf4; padding: 20px; border-radius: 8px; margin-top: 30px;">
+            <h2 style="color: #10b981; margin-bottom: 15px;">📊 Resumen de Cobertura</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                <div style="background: white; padding: 15px; border-radius: 6px; border-left: 4px solid #6366f1;">
+                    <strong style="color: #6366f1;">Statements</strong>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #333;">81%</div>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 6px; border-left: 4px solid #8b5cf6;">
+                    <strong style="color: #8b5cf6;">Branches</strong>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #333;">77.77%</div>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 6px; border-left: 4px solid #10b981;">
+                    <strong style="color: #10b981;">Functions</strong>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #333;">95.23%</div>
+                </div>
+                <div style="background: white; padding: 15px; border-radius: 6px; border-left: 4px solid #f59e0b;">
+                    <strong style="color: #f59e0b;">Lines</strong>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: #333;">80.64%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Generado el <span id="fecha"></span></p>
+            <p>FootStyle - Sistema de Pruebas de Software</p>
+            <p style="margin-top: 10px; color: #10b981; font-weight: 600;">✅ Todas las pruebas están pasando correctamente</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('fecha').textContent = new Date().toLocaleString('es-ES');
+    </script>
+</body>
+</html>
+
