@@ -11,6 +11,9 @@ const products: Product[] = [
   { id: 4, name: "Urban Naranja", price: 159999, image: "/img/shoe_4.png", description: "Estilo urbano con suela de alta tracción.", stock: 16 },
   { id: 5, name: "Sport Morado", price: 189999, image: "/img/shoe_5.png", description: "Para entrenamientos de alto rendimiento.", stock: 10 },
   { id: 6, name: "Trail Gris", price: 209999, image: "/img/shoe_6.png", description: "Ideal para montaña y terrenos irregulares.", stock: 7 },
+  { id: 7, name: "Premium Blanco", price: 229999, image: "/img/shoe_7.png", description: "Zapatilla premium en cuero genuino, diseño elegante y versátil para cualquier ocasión.", stock: 15 },
+  { id: 8, name: "Casual Negro", price: 169999, image: "/img/shoe_8.png", description: "Calzado casual cómodo, perfecto para el día a día con estilo moderno y minimalista.", stock: 20 },
+  { id: 9, name: "Running Rosa", price: 219999, image: "/img/shoe_9.png", description: "Zapatilla deportiva de alta tecnología con amortiguación avanzada para máximo confort.", stock: 11 },
 ];
 
 router.get("/", (_req, res) => {

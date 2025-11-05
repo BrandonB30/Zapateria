@@ -64,7 +64,26 @@ http://localhost:3000
 
 Y con esto finalizamos y comprobamos el funcionamiento de la pagina.
 
-4) Implementación de un filtro de búsqueda:
+2) **Personalización del frontend:**
+
+Se realizó una renovación completa del diseño visual de la aplicación, cambiando el nombre de la tienda de "Zapatería Aether" a "FootStyle" con un nuevo logo. Se implementó un esquema de colores moderno con gradientes en índigo y púrpura (#6366f1 → #8b5cf6) para el navbar, header y botones principales. Se cambió la tipografía a "Poppins" de Google Fonts para mejorar la legibilidad y estética. Se agregaron efectos de hover, sombras y transiciones suaves en las tarjetas de productos. El diseño mantiene completamente el formato responsive de Bootstrap, asegurando una experiencia óptima en todos los dispositivos. Los cambios se aplicaron tanto en `index.html` como en `cart.html` para mantener consistencia visual en toda la aplicación.
+
+<img width="1919" height="954" alt="FootStyle - Diseño Personalizado" src="public/img/Frontend_Personalizado.png" />
+
+
+
+3) **Ampliación del catálogo de productos**:
+
+Se agregaron tres nuevos productos al catálogo en el archivo `src/routes/products.ts`:
+- **Premium Blanco** : Zapatilla premium en cuero genuino, precio $229,999 COP, stock de 15 unidades, imagen `/img/shoe_7.png`
+- **Casual Negro**: Calzado casual cómodo con estilo moderno, precio $169,999 COP, stock de 20 unidades, imagen `/img/shoe_8.png`
+- **Running Rosa** : Zapatilla deportiva de alta tecnología con amortiguación avanzada, precio $219,999 COP, stock de 11 unidades, imagen `/img/shoe_9.png`
+
+Cada producto incluye nombre, precio, descripción detallada y cantidad en stock. Las imágenes correspondientes fueron guardadas en la carpeta `/public/img/` con los nombres `shoe_7.png`, `shoe_8.png` y `shoe_9.png` respectivamente. 
+
+<img width="1919" height="954" alt="Catálogo de Productos - FootStyle" src="public/img/Catalogo_Productos.png" />
+
+4) **Implementación de un filtro de búsqueda :**
 
 Se implementa un container, el botón de filtrar que realizará la acción y los espacios para los diferentes inputs.
 Mediante la funcion function setupFilters() se establece como se aplicarán los filtros acompañado con un event listener "filterBtn.addEventListener" se declara que la accion se realiza cuando se da click al botón.
@@ -72,7 +91,7 @@ Mediante la funcion function setupFilters() se establece como se aplicarán los 
 
 <img width="988" height="540" alt="Image" src="https://github.com/BrandonB30/Zapateria/blob/main/public/img/Filtro4.jpg" />
 
-5) Ruta adicional en el backend que calcula la cantidad y precio total de los productos.
+5) **Ruta adicional en el backend que calcula la cantidad y precio total de los productos.**
 
 Se usa una nueva ruta que toma los elementos existentes del carrito, mediante el uso de objetos JSON y el .map que recorre los objetos agregados para calcular el total en unidades agregadas y el precio final.
 Se realizan pruebas usando Postman para testear el GET y POST.

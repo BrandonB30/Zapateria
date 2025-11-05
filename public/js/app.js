@@ -22,7 +22,12 @@ let allProducts = []; // Aquí guardaremos todos los productos originales
 function renderProducts(products) {
   const list = document.getElementById('product-list');
   
-  if (!products.length) {
+  if (!list) {
+    console.error('Error: No se encontró el elemento product-list');
+    return;
+  }
+  
+  if (!products || !Array.isArray(products) || !products.length) {
     list.innerHTML = `<p class="text-center text-muted">No se encontraron productos</p>`;
     return;
   }
@@ -80,15 +85,19 @@ function renderProducts(products) {
 // Cargar productos desde la API
 async function loadProducts() {
   try {
+    console.log('Cargando productos...');
     const res = await fetch('/api/products');
-    if (!res.ok) throw new Error('Error al cargar productos');
+    if (!res.ok) {
+      throw new Error(`Error HTTP: ${res.status} ${res.statusText}`);
+    }
     
     allProducts = await res.json(); // Guardamos todos los productos en memoria
+    console.log('Productos cargados:', allProducts);
     renderProducts(allProducts);
     updateCartCount();
   } catch (error) {
-    console.error('Error:', error);
-    showMessage('❌ Error al cargar los productos', 'danger');
+    console.error('Error al cargar productos:', error);
+    showMessage(`❌ Error al cargar los productos: ${error.message}`, 'danger');
   }
 }
 
@@ -113,6 +122,11 @@ function setupFilters() {
   const maxPriceInput = document.getElementById('max-price');
   const filterBtn = document.getElementById('filter-btn');
 
+  if (!searchInput || !minPriceInput || !maxPriceInput || !filterBtn) {
+    console.warn('Algunos elementos del filtro no se encontraron');
+    return;
+  }
+
   function applyFilters() {
     const text = searchInput.value.trim().toLowerCase();
     const min = parseFloat(minPriceInput.value) || 0;
@@ -133,9 +147,11 @@ function setupFilters() {
 
   // Filtrar al presionar Enter en cualquier input
   [searchInput, minPriceInput, maxPriceInput].forEach(input => {
-    input.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') applyFilters();
-    });
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') applyFilters();
+      });
+    }
   });
 
   // Filtrar mientras escribe 
@@ -151,6 +167,8 @@ function setupFilters() {
 
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log('DOM cargado, inicializando...');
   await loadProducts();
   setupFilters();
+  console.log('Inicialización completada');
 });
