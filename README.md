@@ -34,6 +34,13 @@ git push origin main
 
 ([https://github.com/BrandonB30/MacaBlue/blob/main/assets/images/Panel%20Admin.jpg](https://github.com/BrandonB30/Zapateria/blob/main/public/img/Git_Push.png))
 
+4) Implementación de un filtro de búsqueda:
+
+Se implementa un container, el botón de filtrar que realizará la acción y los espacios para los diferentes inputs.
+
+https://github.com/BrandonB30/Zapateria/blob/main/public/img/Filtro4.jpg?raw=true
+
+
 ## ⚙️ 5️⃣ Instalación de dependencias del proyecto
 Una vez clonado o descargado el proyecto, abre una terminal en la raíz del proyecto.
 
