@@ -35,4 +35,49 @@ router.post("/clear", (req, res) => {
   res.json({ ok: true, cart: [] });
 });
 
+// Nueva ruta: calcular el total del carrito
+router.get("/total", async (req, res) => {
+  const sess: any = req.session;
+  const cart: CartItem[] = sess.cart || [];
+
+  if (cart.length === 0) {
+    return res.json({ total: 0, items: [] });
+  }
+
+  try {
+    // Cargar los productos
+    const response = await fetch("http://localhost:3000/api/products");
+    const products = await response.json();
+
+    // Construir el detalle de cada producto del carrito
+    const detailedItems = cart
+      .map((item) => {
+        const product = products.find((p: any) => p.id === item.productId);
+        if (!product) return null;
+
+        return {
+          id: product.id,
+          nombre: product.name,
+          precioUnitario: product.price,
+          cantidad: item.qty,
+          subtotal: product.price * item.qty,
+        };
+      })
+      .filter((item): item is NonNullable<typeof item> => item !== null);
+
+    // Calcular el total
+    const total = detailedItems.reduce((acc, item) => acc + item.subtotal, 0);
+
+    // Imprimir total y detalles
+    res.json({
+      total,
+      items: detailedItems,
+    });
+
+  } catch (err) {
+    console.error("Error calculando el total:", err);
+    res.status(500).json({ error: "Error al calcular el total" });
+  }
+});
+
 export default router;

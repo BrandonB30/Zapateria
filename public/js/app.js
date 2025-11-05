@@ -1,3 +1,5 @@
+// public/js/app.js
+
 // Formato de moneda COP
 const fmt = (n) => n.toLocaleString('es-CO', { style: 'currency', currency: 'COP' });
 
@@ -14,17 +16,21 @@ function showMessage(text, type = 'info') {
   setTimeout(() => msg.remove(), 3000);
 }
 
-// Cargar productos desde la API
-async function loadProducts() {
-  const res = await fetch('/api/products');
-  const products = await res.json();
-  const list = document.getElementById('product-list');
+let allProducts = []; // Aquí guardaremos todos los productos originales
 
-  // Renderizar los productos en tarjetas
+// Función para renderizar productos en pantalla
+function renderProducts(products) {
+  const list = document.getElementById('product-list');
+  
+  if (!products.length) {
+    list.innerHTML = `<p class="text-center text-muted">No se encontraron productos</p>`;
+    return;
+  }
+
   list.innerHTML = products.map(p => `
     <div class="col-12 col-sm-6 col-lg-4">
       <div class="card h-100 shadow-sm">
-        <img src="${p.image}" class="card-img-top" alt="${p.name}">
+        <img src="${p.image}" class="card-img-top" alt="${p.name}" style="height: 200px; object-fit: cover;">
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">${p.name}</h5>
           <p class="text-muted mb-2">${p.description}</p>
@@ -38,7 +44,7 @@ async function loadProducts() {
     </div>
   `).join('');
 
-  // Agregar evento a cada botón "Agregar"
+  // Agregamos los eventos de agregar al carrito
   list.querySelectorAll('button[data-id]').forEach(btn => {
     btn.addEventListener('click', async () => {
       const productId = Number(btn.dataset.id);
@@ -69,17 +75,82 @@ async function loadProducts() {
       }
     });
   });
+}
 
-  updateCartCount();
+// Cargar productos desde la API
+async function loadProducts() {
+  try {
+    const res = await fetch('/api/products');
+    if (!res.ok) throw new Error('Error al cargar productos');
+    
+    allProducts = await res.json(); // Guardamos todos los productos en memoria
+    renderProducts(allProducts);
+    updateCartCount();
+  } catch (error) {
+    console.error('Error:', error);
+    showMessage('❌ Error al cargar los productos', 'danger');
+  }
 }
 
 // Actualizar el contador del carrito (ícono)
 async function updateCartCount() {
-  const res = await fetch('/api/cart');
-  const cart = await res.json();
-  const count = cart.reduce((acc, i) => acc + i.qty, 0);
-  document.getElementById('cart-count').textContent = String(count);
+  try {
+    const res = await fetch('/api/cart');
+    if (!res.ok) return;
+    
+    const cart = await res.json();
+    const count = cart.reduce((acc, i) => acc + i.qty, 0);
+    document.getElementById('cart-count').textContent = String(count);
+  } catch (error) {
+    console.error('Error al actualizar carrito:', error);
+  }
 }
 
-// Ejecutar al cargar
-loadProducts();
+// Filtro de búsqueda
+function setupFilters() {
+  const searchInput = document.getElementById('search-input');
+  const minPriceInput = document.getElementById('min-price');
+  const maxPriceInput = document.getElementById('max-price');
+  const filterBtn = document.getElementById('filter-btn');
+
+  function applyFilters() {
+    const text = searchInput.value.trim().toLowerCase();
+    const min = parseFloat(minPriceInput.value) || 0;
+    const max = parseFloat(maxPriceInput.value) || Infinity;
+
+    const filtered = allProducts.filter(p => {
+      const matchesName = p.name.toLowerCase().includes(text) || 
+                          p.description.toLowerCase().includes(text);
+      const matchesPrice = p.price >= min && p.price <= max;
+      return matchesName && matchesPrice;
+    });
+
+    renderProducts(filtered);
+  }
+
+  // Filtrar al hacer clic en el botón
+  filterBtn.addEventListener('click', applyFilters);
+
+  // Filtrar al presionar Enter en cualquier input
+  [searchInput, minPriceInput, maxPriceInput].forEach(input => {
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') applyFilters();
+    });
+  });
+
+  // Filtrar mientras escribe 
+  searchInput.addEventListener('input', () => {
+    const text = searchInput.value.trim().toLowerCase();
+    const filtered = allProducts.filter(p => 
+      p.name.toLowerCase().includes(text) || 
+      p.description.toLowerCase().includes(text)
+    );
+    renderProducts(filtered);
+  });
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadProducts();
+  setupFilters();
+});

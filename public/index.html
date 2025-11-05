@@ -11,7 +11,10 @@
     <div class="container">
       <a class="navbar-brand" href="/">Zapatería Aether</a>
       <div class="d-flex">
-        <a href="/cart.html" class="btn btn-outline-light">Carrito <span id="cart-count" class="badge bg-warning text-dark ms-1">0</span></a>
+        <a href="/cart.html" class="btn btn-outline-light">
+          Carrito 
+          <span id="cart-count" class="badge bg-warning text-dark ms-1">0</span>
+        </a>
       </div>
     </div>
   </nav>
@@ -24,6 +27,26 @@
   </header>
 
   <main class="container py-4">
+
+    <!--Filtro de búsqueda -->
+    <div class="card p-3 mb-4 shadow-sm">
+      <div class="row g-3 align-items-center">
+        <div class="col-md-4">
+          <input id="search-input" type="text" class="form-control" placeholder="Buscar por nombre...">
+        </div>
+        <div class="col-md-3">
+          <input id="min-price" type="number" class="form-control" placeholder="Precio mínimo">
+        </div>
+        <div class="col-md-3">
+          <input id="max-price" type="number" class="form-control" placeholder="Precio máximo">
+        </div>
+        <div class="col-md-2 d-grid">
+          <button id="filter-btn" class="btn btn-primary">Filtrar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de productos -->
     <div id="product-list" class="row g-4"></div>
   </main>
 
@@ -38,7 +61,5 @@
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <div id="alert-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1050;"></div>
-
 </body>
 </html>
