@@ -34,12 +34,6 @@ git push origin main
 
 ([https://github.com/BrandonB30/MacaBlue/blob/main/assets/images/Panel%20Admin.jpg](https://github.com/BrandonB30/Zapateria/blob/main/public/img/Git_Push.png))
 
-4) Implementación de un filtro de búsqueda:
-
-Se implementa un container, el botón de filtrar que realizará la acción y los espacios para los diferentes inputs.
-
-https://github.com/BrandonB30/Zapateria/blob/main/public/img/Filtro4.jpg?raw=true
-
 
 ## ⚙️ 5️⃣ Instalación de dependencias del proyecto
 Una vez clonado o descargado el proyecto, abre una terminal en la raíz del proyecto.
@@ -69,3 +63,29 @@ http://localhost:3000
 <img width="1919" height="954" alt="Image" src="https://github.com/user-attachments/assets/95bbef02-ac06-40d2-9525-22a93c03dca6" />
 
 Y con esto finalizamos y comprobamos el funcionamiento de la pagina.
+
+4) Implementación de un filtro de búsqueda:
+
+Se implementa un container, el botón de filtrar que realizará la acción y los espacios para los diferentes inputs.
+Mediante la funcion function setupFilters() se establece como se aplicarán los filtros acompañado con un event listener "filterBtn.addEventListener" se declara que la accion se realiza cuando se da click al botón.
+
+
+<img width="988" height="540" alt="Image" src="https://github.com/BrandonB30/Zapateria/blob/main/public/img/Filtro4.jpg" />
+
+5) Ruta adicional en el backend que calcula la cantidad y precio total de los productos.
+
+Se usa una nueva ruta que toma los elementos existentes del carrito, mediante el uso de objetos JSON y el .map que recorre los objetos agregados para calcular el total en unidades agregadas y el precio final.
+Se realizan pruebas usando Postman para testear el GET y POST.
+
+Se agregan 3 unidades del producto con Id 2  http://localhost:3000/api/cart/add
+
+<img width="988" height="540" alt="Image" src="https://github.com/BrandonB30/Zapateria/blob/main/public/img/Prueba postman2.jpg" />
+
+Se agregan 4 unidades del producto con Id 1  http://localhost:3000/api/cart/add
+
+<img width="988" height="540" alt="Image" src="https://github.com/BrandonB30/Zapateria/blob/main/public/img/Prueba postman3.jpg" />
+
+Se obtiene el total agregado. http://localhost:3000/api/cart/total
+
+<img width="988" height="540" alt="Image" src="https://github.com/BrandonB30/Zapateria/blob/main/public/img/Prueba postman1.jpg" />
+
