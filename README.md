@@ -1,5 +1,7 @@
-Proyecto de zapateria App
+# Proyecto de zapateria App
 
+Integrantes Brandon Bernal, Andres Barrera, Tatiana Montenegro, Yuliana Paez
+--
 # 🧩 Instrucciones de instalación, configuración y ejecución del proyecto
 
 Este documento describe paso a paso el proceso de instalación, configuración y ejecución del proyecto **Zapatería App**, con capturas de pantalla del procedimiento completo.
@@ -14,14 +16,14 @@ git init
 
 <img width="988" height="540" alt="Image" src="https://github.com/user-attachments/assets/0c100fd4-8427-4c5a-b13c-45a4911635aa" />
 
-☁️ 2️⃣ Creación del repositorio remoto en GitHub
+## ☁️ 2️⃣ Creación del repositorio remoto en GitHub
 Ingresa a GitHub y crea un nuevo repositorio con el nombre zapateria-app.
 
 Copia la URL del repositorio remoto.
 
 <img width="1656" height="633" alt="Image" src="https://github.com/user-attachments/assets/b119e258-3c04-44b1-a75d-3c61e485b37c" />
 
-##🔗 3️⃣ Vinculación del repositorio local con el remoto
+## 🔗 3️⃣ Vinculación del repositorio local con el remoto
 Conecta el repositorio local al remoto usando:
 
 Usando 
@@ -32,7 +34,7 @@ git push origin main
 
 ([https://github.com/BrandonB30/MacaBlue/blob/main/assets/images/Panel%20Admin.jpg](https://github.com/BrandonB30/Zapateria/blob/main/public/img/Git_Push.png))
 
-⚙️ 5️⃣ Instalación de dependencias del proyecto
+## ⚙️ 5️⃣ Instalación de dependencias del proyecto
 Una vez clonado o descargado el proyecto, abre una terminal en la raíz del proyecto.
 
 Ejecuta:
